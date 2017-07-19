@@ -1,15 +1,25 @@
 console.log("converter.js");
 
-function toCelsius () {
-
+function toCelsius (input) {
+	var tempCelsius = input * 2;
+	return tempCelsius;
 }
 
-function toFahrenheit () {
-
+function toFahrenheit (input) {
+	var tempFahrenheit = input * 100;
+	return tempFahrenheit;
 }
+
+// console.log("toFahrenheit", toFahrenheit(123)); 
 
 // Get a reference to the button element in the DOM
-var button = document.getElementById("converter");
+var convertButton = document.getElementById("converter");
+var clearButton = document.getElementById("clear")
+
+
+  var tempToConvert = document.getElementById("inputTemp").value;
+
+  console.log("Initial tempToConvert value", tempToConvert);
 
 
 
@@ -20,11 +30,11 @@ var button = document.getElementById("converter");
 // This function should determine which conversion should
 // happen based on which radio button is selected.
 function determineConverter (clickEvent) {
-  console.log("event", clickEvent);
+  console.log("convert button event", clickEvent);
 
-  var tempToConvert = document.getElementById("inputTemp").event.target.value;
+  var tempToConvert = document.getElementById("inputTemp").value;
 
-  console.log("event target value", event.target.value);
+  console.log("tempToConvert", tempToConvert);
 
 
 
@@ -33,15 +43,26 @@ function determineConverter (clickEvent) {
   console.log("farToCelChecked", farToCelChecked);
   console.log("celToFarChecked", celToFarChecked);
 
-  	
+  if (farToCelChecked === true) {
+  	console.log(toCelsius(tempToConvert));
+  	document.getElementById("printConvertedTemp").innerHTML = `<p>Your converted temp is: ${toCelsius(tempToConvert)}</p>`
+  } else {
+  	console.log(toFahrenheit(tempToConvert));
+  	document.getElementById("printConvertedTemp").innerHTML = `<p>Your converted temp is: ${toFahrenheit(tempToConvert)}</p>`
+  }
 
 
 }
 
+function clearInputTemp (clickEvent) {
+	console.log("clear button event", clickEvent);
+	document.getElementById("printConvertedTemp").innerHTML = `<p></p>`
+}
 
 // Assign a function to be executed when the button is clicked
-button.addEventListener("click", determineConverter);
+convertButton.addEventListener("click", determineConverter);
 
+clearButton.addEventListener("click", clearInputTemp);
 
 
 // Requirements
