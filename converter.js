@@ -1,46 +1,88 @@
-console.log("converter.js");
+// console.log("converter.js");
 
-function toCelsius () {
-
+// ******* Function to convert Fahrenheit to Celsius ******* //
+function toCelsius (input) {
+	let tempCelsius = ((input - 32) * (5/9)).toFixed(1);
+	return tempCelsius;
 }
 
-function toFahrenheit () {
-
+// ******* Function to convert Celsius to Fahrenheit ******* //
+function toFahrenheit (input) {
+	let tempFahrenheit = ((input * 9/5) + 32).toFixed(1);
+	return tempFahrenheit;
 }
 
-// Get a reference to the button element in the DOM
-var button = document.getElementById("converter");
+// ******* Function to change font color for Fahrenheit to Celsius ******* //
+function toCelsiusColors (temp) {
+  if (temp > 32) {
+    document.getElementById("tempColor").classList.add("hot");
+  } else if (temp < 0) {
+    document.getElementById("tempColor").classList.add("cold");
+  } else {
+    document.getElementById("tempColor").classList.add("medium");
+  }
+}
 
+// ******* Function to change font color for Celsius to Fahrenheit ******* //
+function toFahrenheitColors (temp) {
+  if (temp > 90) {
+      document.getElementById("tempColor").classList.add("hot");
+    } else if (temp < 32) {
+      document.getElementById("tempColor").classList.add("cold");
+    } else {
+      document.getElementById("tempColor").classList.add("medium");
+    }
+}
 
+// ******* Define variables to pull information from page re: buttons and entered value to convert ******* //
+let convertButton = document.getElementById("converter");
+let clearButton = document.getElementById("clear");
+let tempToConvert = document.getElementById("inputTemp").value;
 
-// var chosenConverter = document.getElementById("farToCel").checked;
-
-// console.log("initial check converter", chosenConverter)
-
-// This function should determine which conversion should
-// happen based on which radio button is selected.
+// ******* Function to determine which conversion chosen and to execute resulting conversion ******* //
 function determineConverter (clickEvent) {
-  console.log("event", clickEvent);
 
-  var tempToConvert = document.getElementById("inputTemp").event.target.value;
+  // **** get entered temp value after click of convert button **** //
+  tempToConvert = document.getElementById("inputTemp").value;
 
-  console.log("event target value", event.target.value);
-
-
-
+  // **** check which conversion radio button is selected **** //
  	var farToCelChecked = document.getElementById("farToCel").checked;
-  	var celToFarChecked = document.getElementById("celToFar").checked;
-  console.log("farToCelChecked", farToCelChecked);
-  console.log("celToFarChecked", celToFarChecked);
+  var celToFarChecked = document.getElementById("celToFar").checked;
 
-  	
+  // **** run conversion functions based on radio button choice **** //
+  if (farToCelChecked === true) {
+    let celsiusTemp = toCelsius(tempToConvert);
+  	document.getElementById("printConvertedTemp").innerHTML = `<p>Your converted temp is: <span id="tempColor">${celsiusTemp}</span> degrees Celsius</p>`;
+      toCelsiusColors(celsiusTemp);
 
+  } else {
+    let fahrenheitTemp = toFahrenheit(tempToConvert);
+  	document.getElementById("printConvertedTemp").innerHTML = `<p>Your converted temp is: <span id="tempColor">${fahrenheitTemp}</span> degrees Fahrenheit</p>`;
+      toFahrenheitColors(fahrenheitTemp);
+  }
 
 }
 
+// ******* Function to clear input field and conversion message on clear button click ******* //
+function clearInputTemp (clickEvent) {
+	document.getElementById("printConvertedTemp").innerHTML = `<p></p>`;
+  document.getElementById("inputTemp").value = "";
+}
 
-// Assign a function to be executed when the button is clicked
-button.addEventListener("click", determineConverter);
+
+// ******* Event listeners for button clicks ******* //
+convertButton.addEventListener("click", determineConverter);
+clearButton.addEventListener("click", clearInputTemp);
+
+
+// ******* Listener for return keypress and function trigger for keypress ******* //
+document.addEventListener("keypress", function(event) {
+  if (event.keyCode === 13) {
+    determineConverter(tempToConvert);
+    event.preventDefault();
+  }
+});
+
 
 
 

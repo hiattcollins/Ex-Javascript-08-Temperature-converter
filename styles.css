@@ -1,0 +1,14 @@
+/*Cold Temp*/
+.cold {
+	color: blue;
+}
+
+/*Medium Temp*/
+.medium {
+	color: green;
+}
+
+/*Hot Temp*/
+.hot {
+	color: red;
+}
